@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Github</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img class="profile-avatar" src="https://via.placeholder.com/180x180" alt=".">
+            <h1 class="profile-name">Aline Cunico</h1>
+            <h2 class="profile-username">@aduarte2015</h2>
+            <ul class="numbers">
+                <li class="numbers-item" id="repositories">
+                    <h4>Repositórios</h4>
+                </li>
+                <li class="numbers-item" id="followers">
+                    <h4>Seguidores</h4>
+                </li>
+                <li class="numbers-item" id="following">
+                    <h4>Seguindo</h4>
+                </li>
+            </ul>
+            <a href="#" class="profile-link" id="profile-link">Ver no Github</a>
+        </div>
+    </header>
+
+    <script>
+        // Função para fazer a requisição e preencher os dados
+        async function fetchGithubData() {
+            try {
+                const response = await fetch('https://api.github.com/users/aduarte2015');
+                const data = await response.json();
+
+                // Preencher os dados nos elementos HTML
+                document.getElementById('profile-avatar').setAttribute('src', data.avatar_url);
+                document.getElementById('repositories').innerHTML += `<p>${data.public_repos}</p>`;
+                document.getElementById('followers').innerHTML += `<p>${data.followers}</p>`;
+                document.getElementById('following').innerHTML += `<p>${data.following}</p>`;
+                document.getElementById('profile-link').setAttribute('href', data.html_url);
+            } catch (error) {
+                console.error('Ocorreu um erro ao buscar os dados do Github:', error);
+            }
+        }
+
+        // Chamar a função para buscar os dados do Github quando a página carregar
+        window.onload = fetchGithubData;
+    </script>
+</body>
+</html>
